@@ -85,6 +85,9 @@ async def send_message(message: Message):
     except Exception as e:
         logger.error(f"Failed to send message: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to send message")
+    
+
+# now user can see the messages but it is encrypted, you should have key to access the message.
 
 @app.get("/messages/{username}")
 async def get_messages(username: str):
@@ -116,9 +119,13 @@ async def get_messages(username: str):
     
     return decrypted_messages
 
+# here you'll get the messages with encryption
+
 @app.get("/raw_messages")
 async def get_raw_messages():
     return messages
+
+# now this function will help to decode
 
 @app.post("/decode")
 async def decode_message(request: DecodeRequest):
